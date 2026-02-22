@@ -1,29 +1,121 @@
-.page {
-  min-height: calc(100vh - 60px);
-  padding: 4rem 2rem;
-  max-width: 800px;
-  margin: 0 auto;
-  color: #000;
-}
+.about-hero {
+  background-color: var(--um-black);
+  color: var(--um-white);
+  padding: 3rem 1.5rem 2.5rem;
 
-.page-header {
-  margin-bottom: 2rem;
-
-  h2 {
+  h1 {
     font-size: 2rem;
-    text-transform: uppercase;
+    font-weight: 700;
     letter-spacing: 0.1em;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    font-size: 1.1rem;
-    color: #555;
+    text-transform: uppercase;
   }
 }
 
-.page-body {
-  font-size: 1rem;
-  line-height: 1.8;
-  color: #333;
+.about {
+  padding: 4rem 1.5rem 5rem;
+
+  &__block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-bottom: 5rem;
+
+    &--reverse {
+      direction: rtl;
+
+      > * {
+        direction: ltr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+
+      &--reverse {
+        direction: ltr;
+      }
+    }
+  }
+
+  &__text {
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+    }
+
+    p {
+      font-size: 0.9375rem;
+      color: var(--um-gray-700);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__visual {
+    aspect-ratio: 4 / 3;
+
+    &--dark {
+      background-color: #1a1a1a;
+    }
+
+    &--light {
+      background-color: var(--um-gray-200);
+    }
+  }
+
+  &__values {
+    border-top: 1px solid var(--um-gray-200);
+    padding-top: 4rem;
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 2.5rem;
+    }
+  }
+
+  &__values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__value {
+    span {
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--um-gray-400);
+      margin-bottom: 0.75rem;
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: var(--um-gray-700);
+      line-height: 1.7;
+    }
+  }
 }

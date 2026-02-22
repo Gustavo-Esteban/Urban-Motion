@@ -1,12 +1,59 @@
-<nav class="navbar">
-  <a class="navbar-brand" routerLink="/">Urban Motion</a>
-  <ul class="navbar-links">
-    <li><a routerLink="/loja" routerLinkActive="active">Loja</a></li>
-    <li><a routerLink="/sobre" routerLinkActive="active">Sobre</a></li>
-    <li><a routerLink="/carrinho" routerLinkActive="active">Carrinho</a></li>
-  </ul>
-</nav>
+<header class="navbar">
+  <div class="navbar__inner container">
+    <a class="navbar__brand" routerLink="/">Urban Motion</a>
+
+    <nav class="navbar__links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+      <a routerLink="/loja" routerLinkActive="active">Loja</a>
+      <a routerLink="/sobre" routerLinkActive="active">Sobre</a>
+    </nav>
+
+    <a class="navbar__cart" routerLink="/carrinho">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <span class="navbar__cart-count">0</span>
+    </a>
+  </div>
+</header>
 
 <main>
   <router-outlet />
 </main>
+
+<footer class="footer">
+  <div class="footer__inner container">
+    <div class="footer__brand">
+      <span class="footer__logo">Urban Motion</span>
+      <p>Streetwear minimalista.<br>Preto e branco para o seu dia a dia.</p>
+    </div>
+
+    <div class="footer__col">
+      <h4>Navegação</h4>
+      <ul>
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/loja">Loja</a></li>
+        <li><a routerLink="/sobre">Sobre</a></li>
+        <li><a routerLink="/carrinho">Carrinho</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h4>Informações</h4>
+      <ul>
+        <li><a routerLink="/sobre">Quem somos</a></li>
+        <li><a href="#">Política de trocas</a></li>
+        <li><a href="#">Frete e entrega</a></li>
+        <li><a href="#">Contato</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="container">
+      <p>© 2025 Urban Motion. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>

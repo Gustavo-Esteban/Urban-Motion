@@ -1,44 +1,152 @@
+/* === Hero === */
 .hero {
-  min-height: 100vh;
+  min-height: calc(100vh - var(--um-navbar-h));
+  background-color: var(--um-black);
+  color: var(--um-white);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #000;
-  color: #fff;
-}
-
-.hero-content {
   text-align: center;
-  max-width: 640px;
-  padding: 2rem;
+  padding: 4rem 1.5rem;
+
+  &__eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--um-gray-400);
+    margin-bottom: 1.5rem;
+  }
+
+  &__title {
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 0.9;
+    margin-bottom: 2rem;
+  }
+
+  &__sub {
+    font-size: 1rem;
+    color: var(--um-gray-400);
+    max-width: 400px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
 }
 
-.hero h1 {
-  font-size: 3rem;
-  letter-spacing: 0.1em;
+/* === Section title === */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  margin-bottom: 1rem;
+  margin-bottom: 2.5rem;
 }
 
-.hero p {
-  font-size: 1.125rem;
-  margin-bottom: 2rem;
+/* === Highlights === */
+.highlights {
+  padding: 5rem 1.5rem;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__cta {
+    margin-top: 3rem;
+    text-align: center;
+  }
 }
 
-.hero-cta {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid #fff;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.875rem;
-  text-decoration: none;
-  color: #000;
-  background-color: #fff;
+/* === Product card === */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+
+  &__img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background-color: var(--um-gray-100);
+
+    &--placeholder {
+      background-color: #1a1a1a;
+    }
+
+    &--white {
+      background-color: var(--um-gray-200);
+    }
+
+    &--gray {
+      background-color: #888;
+    }
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  &__name {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  &__price {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--um-gray-700);
+  }
+
+  &__link {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: var(--um-gray-700);
+    transition: color var(--um-transition);
+
+    &:hover {
+      color: var(--um-black);
+    }
+  }
 }
 
-.hero-cta:hover {
-  background-color: transparent;
-  color: #fff;
-}
+/* === Manifesto === */
+.manifesto {
+  background-color: var(--um-black);
+  color: var(--um-white);
 
+  &__inner {
+    padding: 5rem 1.5rem;
+    text-align: center;
+    max-width: 680px;
+
+    h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    p {
+      font-size: 1rem;
+      color: var(--um-gray-400);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+  }
+}

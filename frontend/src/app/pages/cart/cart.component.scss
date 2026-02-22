@@ -1,23 +1,32 @@
-.page {
-  min-height: calc(100vh - 60px);
-  padding: 4rem 2rem;
-  max-width: 800px;
-  margin: 0 auto;
-  color: #000;
+.cart-header {
+  background-color: var(--um-black);
+  color: var(--um-white);
+  padding: 3rem 1.5rem 2.5rem;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
 }
 
-.page-header {
-  margin-bottom: 2rem;
+.cart {
+  padding: 4rem 1.5rem 5rem;
+  min-height: 50vh;
 
-  h2 {
-    font-size: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.5rem;
-  }
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 4rem 0;
+    text-align: center;
 
-  p {
-    font-size: 1rem;
-    color: #555;
+    p {
+      font-size: 1rem;
+      color: var(--um-gray-400);
+    }
   }
 }

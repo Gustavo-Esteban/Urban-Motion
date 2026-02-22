@@ -1,7 +1,27 @@
-<section class="page">
-  <header class="page-header">
-    <h2>Loja</h2>
-    <p>Em breve: grade de camisetas Urban Motion.</p>
-  </header>
+<div class="store-header">
+  <div class="container">
+    <h1>Loja</h1>
+    <p>{{ products.length }} produtos</p>
+  </div>
+</div>
+
+<section class="store container">
+  <div class="store__grid">
+    @for (p of products; track p.name) {
+      <div class="product-card">
+        <div class="product-card__img" [style.background-color]="p.bg"></div>
+        <div class="product-card__info">
+          <span class="product-card__name">{{ p.name }}</span>
+          <span class="product-card__price">{{ p.price }}</span>
+        </div>
+        <div class="product-card__sizes">
+          @for (s of p.sizes; track s) {
+            <span>{{ s }}</span>
+          }
+        </div>
+        <button class="btn btn--primary product-card__btn">Adicionar ao carrinho</button>
+      </div>
+    }
+  </div>
 </section>
 

@@ -1,41 +1,144 @@
+/* === Navbar === */
 .navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.25rem 2rem;
-  background-color: #fff;
-  border-bottom: 1px solid #e5e5e5;
   position: sticky;
   top: 0;
   z-index: 100;
-}
+  background-color: var(--um-black);
+  color: var(--um-white);
+  height: var(--um-navbar-h);
 
-.navbar-brand {
-  font-size: 1.125rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #111;
-}
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
 
-.navbar-links {
-  display: flex;
-  gap: 2rem;
-
-  a {
-    font-size: 0.875rem;
-    letter-spacing: 0.05em;
+  &__brand {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #111;
-    transition: opacity 0.2s;
+    color: var(--um-white);
+    flex-shrink: 0;
+  }
 
-    &:hover,
-    &.active {
-      opacity: 0.5;
+  &__links {
+    display: flex;
+    gap: 2.5rem;
+
+    a {
+      font-size: 0.8125rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--um-gray-400);
+      transition: color var(--um-transition);
+
+      &:hover,
+      &.active {
+        color: var(--um-white);
+      }
     }
+  }
+
+  &__cart {
+    position: relative;
+    color: var(--um-white);
+    display: flex;
+    align-items: center;
+
+    &:hover svg {
+      opacity: 0.7;
+    }
+  }
+
+  &__cart-count {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background-color: var(--um-white);
+    color: var(--um-black);
+    font-size: 0.625rem;
+    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
-main {
-  min-height: calc(100vh - 65px);
+/* === Footer === */
+.footer {
+  background-color: var(--um-black);
+  color: var(--um-white);
+  margin-top: 5rem;
+
+  &__inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    padding: 4rem 1.5rem 3rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__logo {
+    display: block;
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  &__brand p {
+    font-size: 0.875rem;
+    color: var(--um-gray-400);
+    line-height: 1.7;
+  }
+
+  &__col {
+    h4 {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      color: var(--um-gray-400);
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    a {
+      font-size: 0.875rem;
+      color: var(--um-gray-400);
+      transition: color var(--um-transition);
+
+      &:hover {
+        color: var(--um-white);
+      }
+    }
+  }
+
+  &__bottom {
+    border-top: 1px solid #222;
+    padding: 1.25rem 1.5rem;
+
+    p {
+      font-size: 0.75rem;
+      color: var(--um-gray-400);
+      text-align: center;
+    }
+  }
 }
