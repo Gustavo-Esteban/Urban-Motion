@@ -1,0 +1,23 @@
+.page {
+  min-height: calc(100vh - 60px);
+  padding: 4rem 2rem;
+  background-color: #fff;
+  color: #000;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+
+  h2 {
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #555;
+  }
+}
