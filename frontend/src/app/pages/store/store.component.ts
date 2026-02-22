@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ProductsService, WooProduct } from '../../services/products.service';
 
 @Component({
   selector: 'um-store',
@@ -8,14 +9,33 @@ import { CommonModule } from '@angular/common';
   templateUrl: './store.component.html',
   styleUrl: './store.component.scss',
 })
-export class StoreComponent {
-  products = [
-    { name: 'Camiseta Essential Preta', price: 'R$ 89,90', bg: '#1a1a1a', sizes: ['P', 'M', 'G', 'GG'] },
-    { name: 'Camiseta Essential Branca', price: 'R$ 89,90', bg: '#e5e5e5', sizes: ['P', 'M', 'G', 'GG'] },
-    { name: 'Camiseta Oversized Motion', price: 'R$ 109,90', bg: '#888', sizes: ['P', 'M', 'G', 'GG'] },
-    { name: 'Camiseta Gráfico Urbano', price: 'R$ 99,90', bg: '#222', sizes: ['P', 'M', 'G'] },
-    { name: 'Camiseta Minimal Logo', price: 'R$ 79,90', bg: '#d0d0d0', sizes: ['M', 'G', 'GG'] },
-    { name: 'Camiseta Street Block', price: 'R$ 109,90', bg: '#555', sizes: ['P', 'M', 'G', 'GG'] },
-  ];
+export class StoreComponent implements OnInit {
+  products: WooProduct[] = [];
+  loading = true;
+  error = false;
+
+  constructor(private productsService: ProductsService) {}
+
+  ngOnInit() {
+    this.productsService.getAll({ per_page: 20 }).subscribe({
+      next: (data) => {
+        this.products = data;
+        this.loading = false;
+      },
+      error: () => {
+        this.error = true;
+        this.loading = false;
+      },
+    });
+  }
+
+  getSizes(product: WooProduct): string[] {
+    const attr = product.attributes.find(a => a.name.toLowerCase() === 'tamanho' || a.name.toLowerCase() === 'size');
+    return attr?.options ?? [];
+  }
+
+  getImage(product: WooProduct): string {
+    return product.images?.[0]?.src ?? '';
+  }
 }
 
