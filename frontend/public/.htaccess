@@ -1,21 +1,24 @@
 Options -MultiViews
 
-# Angular tem prioridade na raiz
 DirectoryIndex index.html index.php
 
 RewriteEngine On
 
-# 1. Arquivos e pastas que existem fisicamente (wp-content, wp-includes, etc.)
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
+# 1. Arquivos fisicos reais (js, css, imagens, fontes, etc.)
+RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
-# 2. WordPress REST API e rotas dinâmicas → roteadas pelo index.php do WordPress
+# 2. Diretorios do WordPress que devem ser servidos diretamente
+RewriteCond %{REQUEST_URI} ^/wp-content [NC,OR]
+RewriteCond %{REQUEST_URI} ^/wp-includes [NC]
+RewriteRule ^ - [L]
+
+# 3. WordPress REST API e admin → roteados pelo index.php do WordPress
 RewriteCond %{REQUEST_URI} ^/wp-json [NC,OR]
 RewriteCond %{REQUEST_URI} ^/wp-admin [NC,OR]
 RewriteCond %{REQUEST_URI} ^/wp-login\.php [NC,OR]
 RewriteCond %{REQUEST_URI} ^/wp-cron\.php [NC]
 RewriteRule ^ index.php [L]
 
-# 3. Tudo mais → Angular SPA
+# 4. Tudo mais (incluindo rotas Angular como /loja, /sobre) → Angular SPA
 RewriteRule ^ index.html [QSA,L]
