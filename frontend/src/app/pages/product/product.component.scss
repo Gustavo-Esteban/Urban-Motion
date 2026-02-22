@@ -189,11 +189,20 @@
     padding: 1rem;
     font-size: 0.875rem;
     letter-spacing: 0.1em;
+    text-align: center;
 
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
+  }
+
+  &__cart-link {
+    width: 100%;
+    padding: 1rem;
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    text-align: center;
   }
 
   &__out-of-stock {
