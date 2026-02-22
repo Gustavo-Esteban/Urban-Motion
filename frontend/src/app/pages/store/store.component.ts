@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { finalize } from 'rxjs/operators';
 import { ProductsService, WooProduct } from '../../services/products.service';
 
 @Component({
@@ -17,16 +18,25 @@ export class StoreComponent implements OnInit {
   constructor(private productsService: ProductsService) {}
 
   ngOnInit() {
-    this.productsService.getAll({ per_page: 20 }).subscribe({
-      next: (data) => {
-        this.products = data;
-        this.loading = false;
-      },
-      error: () => {
-        this.error = true;
-        this.loading = false;
-      },
-    });
+    this.loading = true;
+    this.error = false;
+
+    this.productsService
+      .getAll({ per_page: 20 })
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+        }),
+      )
+      .subscribe({
+        next: (data) => {
+          this.products = Array.isArray(data) ? data : [];
+        },
+        error: (err) => {
+          console.error('Erro ao carregar produtos', err);
+          this.error = true;
+        },
+      });
   }
 
   getSizes(product: WooProduct): string[] {
@@ -38,4 +48,3 @@ export class StoreComponent implements OnInit {
     return product.images?.[0]?.src ?? '';
   }
 }
-
