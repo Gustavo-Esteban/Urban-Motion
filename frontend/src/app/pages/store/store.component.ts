@@ -17,6 +17,11 @@ export class StoreComponent implements OnInit {
 
   constructor(private productsService: ProductsService) {}
 
+  openProduct(product: WooProduct) {
+    if (!product?.permalink) return;
+    window.open(product.permalink, '_blank');
+  }
+
   ngOnInit() {
     this.loading = true;
     this.error = false;

@@ -31,7 +31,14 @@
               }
             </div>
           }
-          <button class="btn btn--primary product-card__btn">Adicionar ao carrinho</button>
+          <a
+            class="btn btn--primary product-card__btn"
+            [href]="p.permalink"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ver produto
+          </a>
         </div>
       }
     </div>

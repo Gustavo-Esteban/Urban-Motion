@@ -7,6 +7,7 @@ export interface WooProduct {
   id: number;
   name: string;
   price: string;
+  permalink: string;
   images: { src: string; alt: string }[];
   attributes: { name: string; options: string[] }[];
   short_description: string;
