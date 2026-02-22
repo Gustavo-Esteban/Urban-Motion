@@ -7,10 +7,14 @@ export interface WooProduct {
   id: number;
   name: string;
   price: string;
+  regular_price: string;
+  sale_price: string;
+  on_sale: boolean;
   permalink: string;
   images: { src: string; alt: string }[];
   attributes: { name: string; options: string[] }[];
   short_description: string;
+  description: string;
   stock_status: string;
 }
 

@@ -1,0 +1,116 @@
+@if (loading) {
+  <div class="product-loading">
+    <div class="container">Carregando produto...</div>
+  </div>
+} @else if (error || !product) {
+  <div class="product-error container">
+    <p>Produto não encontrado.</p>
+    <a routerLink="/loja" class="btn btn--primary">Voltar para a Loja</a>
+  </div>
+} @else {
+  <div class="product-page">
+    <div class="container">
+
+      <nav class="product-page__breadcrumb">
+        <a routerLink="/loja">Loja</a>
+        <span>/</span>
+        <span>{{ product.name }}</span>
+      </nav>
+
+      <div class="product-page__layout">
+
+        <!-- Galeria -->
+        <div class="product-gallery">
+          <div class="product-gallery__main">
+            @if (getMainImage()) {
+              <img [src]="getMainImage()" [alt]="product.name" />
+            } @else {
+              <div class="product-gallery__placeholder">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.75">
+                  <rect x="3" y="3" width="18" height="18" rx="1"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+              </div>
+            }
+            @if (product.on_sale) {
+              <span class="product-gallery__badge">Sale</span>
+            }
+          </div>
+
+          @if (product.images.length > 1) {
+            <div class="product-gallery__thumbs">
+              @for (img of product.images; track img.src; let i = $index) {
+                <button
+                  class="product-gallery__thumb"
+                  [class.active]="selectedImage === i"
+                  (click)="selectedImage = i"
+                >
+                  <img [src]="img.src" [alt]="img.alt || product.name" />
+                </button>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Info -->
+        <div class="product-info">
+          <h1 class="product-info__name">{{ product.name }}</h1>
+
+          <div class="product-info__pricing">
+            @if (product.on_sale && product.regular_price) {
+              <span class="product-info__price-old">R$ {{ product.regular_price }}</span>
+            }
+            <span class="product-info__price">R$ {{ product.price }}</span>
+          </div>
+
+          @if (product.short_description) {
+            <p class="product-info__desc">{{ stripHtml(product.short_description) }}</p>
+          }
+
+          @if (getSizes().length) {
+            <div class="product-info__sizes">
+              <p class="product-info__label">Tamanho</p>
+              <div class="product-info__size-grid">
+                @for (s of getSizes(); track s) {
+                  <button
+                    class="size-btn"
+                    [class.active]="selectedSize === s"
+                    (click)="selectSize(s)"
+                  >
+                    {{ s }}
+                  </button>
+                }
+              </div>
+            </div>
+          }
+
+          <div class="product-info__actions">
+            <button
+              class="btn btn--primary product-info__add"
+              [disabled]="getSizes().length > 0 && !selectedSize"
+            >
+              @if (getSizes().length > 0 && !selectedSize) {
+                Selecione um tamanho
+              } @else {
+                Adicionar ao carrinho
+              }
+            </button>
+          </div>
+
+          @if (product.stock_status === 'outofstock') {
+            <p class="product-info__out-of-stock">Produto esgotado</p>
+          }
+
+          @if (product.description) {
+            <div class="product-info__full-desc">
+              <p class="product-info__label">Descrição</p>
+              <p>{{ stripHtml(product.description) }}</p>
+            </div>
+          }
+        </div>
+
+      </div>
+    </div>
+  </div>
+}
