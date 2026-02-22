@@ -84,6 +84,10 @@ export class StoreComponent implements OnInit {
         section.appendChild(gridEl);
       }
 
+      gridEl.style.display = 'grid';
+      gridEl.style.gap = '2rem 1.5rem';
+      gridEl.style.gridTemplateColumns = 'repeat(3, 1fr)';
+
       if (!this.products.length) {
         gridEl.innerHTML = '';
         return;
