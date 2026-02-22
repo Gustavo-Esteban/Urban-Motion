@@ -61,8 +61,8 @@ export class StoreComponent implements OnInit {
     if (typeof document === 'undefined') return;
 
     try {
+      const section = document.querySelector('section.store') as HTMLElement | null;
       const loadingEl = document.querySelector('.store__loading') as HTMLElement | null;
-      const gridEl = document.querySelector('.store__grid');
       const countEl = document.querySelector('.store-header p');
 
       if (loadingEl) {
@@ -73,7 +73,16 @@ export class StoreComponent implements OnInit {
         countEl.textContent = `${this.products.length} produtos`;
       }
 
-      if (!gridEl) return;
+      if (!section) return;
+
+      let gridEl = section.querySelector('.store__grid') as HTMLElement | null;
+
+      if (!gridEl) {
+        section.innerHTML = '';
+        gridEl = document.createElement('div');
+        gridEl.className = 'store__grid';
+        section.appendChild(gridEl);
+      }
 
       if (!this.products.length) {
         gridEl.innerHTML = '';
