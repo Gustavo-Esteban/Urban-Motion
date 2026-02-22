@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { finalize } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 import { ProductsService, WooProduct } from '../../services/products.service';
 
 @Component({
@@ -18,13 +18,24 @@ export class StoreComponent implements OnInit {
   constructor(private productsService: ProductsService) {}
 
   ngOnInit() {
+    console.log('StoreComponent: ngOnInit');
+
     this.loading = true;
     this.error = false;
 
     this.productsService
       .getAll({ per_page: 20 })
       .pipe(
+        tap({
+          next: (data) => {
+            console.log('StoreComponent: produtos recebidos', data);
+          },
+          error: (err) => {
+            console.error('StoreComponent: erro na requisição', err);
+          },
+        }),
         finalize(() => {
+          console.log('StoreComponent: finalize chamado');
           this.loading = false;
         }),
       )
@@ -37,6 +48,13 @@ export class StoreComponent implements OnInit {
           this.error = true;
         },
       });
+
+    setTimeout(() => {
+      if (this.loading) {
+        console.warn('StoreComponent: timeout ainda em loading, forçando false');
+        this.loading = false;
+      }
+    }, 5000);
   }
 
   getSizes(product: WooProduct): string[] {
