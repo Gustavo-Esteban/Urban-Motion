@@ -1,6 +1,265 @@
-<section class="page">
-  <header class="page-header">
-    <h2>Checkout</h2>
-    <p>Finalize seu pedido.</p>
-  </header>
-</section>
+@if (submitted()) {
+  <div class="checkout-success">
+    <div class="container">
+      <div class="checkout-success__inner">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>
+        <h1>Pedido recebido!</h1>
+        <p>Entraremos em contato pelo e-mail informado para confirmar o pagamento e o envio.</p>
+        <a routerLink="/loja" class="btn btn--primary">Continuar comprando</a>
+      </div>
+    </div>
+  </div>
+} @else if (!cart.items().length) {
+  <div class="checkout-empty">
+    <div class="container">
+      <p>Seu carrinho está vazio.</p>
+      <a routerLink="/loja" class="btn btn--primary">Ver produtos</a>
+    </div>
+  </div>
+} @else {
+  <div class="checkout-header">
+    <div class="container">
+      <h1>Finalizar pedido</h1>
+    </div>
+  </div>
+
+  <div class="checkout container">
+    <div class="checkout__layout">
+
+      <!-- Formulário -->
+      <div class="checkout__form">
+
+        <!-- Identificação -->
+        <section class="checkout__section">
+          <h2 class="checkout__section-title">Identificação</h2>
+
+          <div class="checkout__fields">
+            <div class="checkout__field checkout__field--full">
+              <label>Nome completo *</label>
+              <input
+                type="text"
+                placeholder="Seu nome"
+                [value]="name()"
+                (input)="name.set($any($event.target).value)"
+              />
+            </div>
+
+            <div class="checkout__field">
+              <label>E-mail *</label>
+              <input
+                type="email"
+                placeholder="seu@email.com"
+                [value]="email()"
+                (input)="email.set($any($event.target).value)"
+              />
+            </div>
+
+            <div class="checkout__field">
+              <label>CPF *</label>
+              <input
+                type="text"
+                placeholder="000.000.000-00"
+                maxlength="14"
+                [value]="document()"
+                (input)="document.set($any($event.target).value)"
+              />
+            </div>
+
+            <div class="checkout__field">
+              <label>Telefone</label>
+              <input
+                type="tel"
+                placeholder="(11) 99999-9999"
+                [value]="phone()"
+                (input)="phone.set($any($event.target).value)"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- Endereço -->
+        <section class="checkout__section">
+          <h2 class="checkout__section-title">Endereço de entrega</h2>
+
+          <div class="checkout__fields">
+            <div class="checkout__field">
+              <label>CEP *</label>
+              <div class="checkout__cep-wrap">
+                <input
+                  type="text"
+                  placeholder="00000-000"
+                  maxlength="9"
+                  [value]="cep()"
+                  (input)="onCepChange($any($event.target).value)"
+                />
+                @if (loadingCep()) {
+                  <span class="checkout__cep-loading">buscando...</span>
+                }
+              </div>
+            </div>
+
+            <div class="checkout__field checkout__field--full">
+              <label>Rua *</label>
+              <input
+                type="text"
+                placeholder="Nome da rua"
+                [value]="street()"
+                (input)="street.set($any($event.target).value)"
+              />
+            </div>
+
+            <div class="checkout__field checkout__field--sm">
+              <label>Número *</label>
+              <input
+                type="text"
+                placeholder="123"
+                [value]="number()"
+                (input)="number.set($any($event.target).value)"
+              />
+            </div>
+
+            <div class="checkout__field">
+              <label>Complemento</label>
+              <input
+                type="text"
+                placeholder="Apto, bloco..."
+                [value]="complement()"
+                (input)="complement.set($any($event.target).value)"
+              />
+            </div>
+
+            <div class="checkout__field">
+              <label>Bairro *</label>
+              <input
+                type="text"
+                placeholder="Seu bairro"
+                [value]="neighborhood()"
+                (input)="neighborhood.set($any($event.target).value)"
+              />
+            </div>
+
+            <div class="checkout__field">
+              <label>Cidade *</label>
+              <input
+                type="text"
+                placeholder="Sua cidade"
+                [value]="city()"
+                (input)="city.set($any($event.target).value)"
+              />
+            </div>
+
+            <div class="checkout__field checkout__field--sm">
+              <label>Estado *</label>
+              <input
+                type="text"
+                placeholder="SP"
+                maxlength="2"
+                [value]="state()"
+                (input)="state.set($any($event.target).value)"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- Frete -->
+        @if (shippingOptions().length > 0 || loadingShipping()) {
+          <section class="checkout__section">
+            <h2 class="checkout__section-title">Frete</h2>
+
+            @if (loadingShipping()) {
+              <p class="checkout__shipping-loading">Calculando frete...</p>
+            } @else {
+              <div class="checkout__shipping-options">
+                @for (option of shippingOptions(); track option.id) {
+                  <button
+                    class="checkout__shipping-option"
+                    [class.active]="selectedShipping()?.id === option.id"
+                    (click)="selectShipping(option)"
+                  >
+                    <div class="checkout__shipping-radio">
+                      <span class="checkout__shipping-dot"></span>
+                    </div>
+                    <div class="checkout__shipping-info">
+                      <span class="checkout__shipping-name">{{ option.name }}</span>
+                      <span class="checkout__shipping-days">{{ option.days }} dias úteis</span>
+                    </div>
+                    <span class="checkout__shipping-price">R$ {{ formatPrice(option.price_cents) }}</span>
+                  </button>
+                }
+              </div>
+            }
+          </section>
+        }
+
+      </div>
+
+      <!-- Resumo -->
+      <div class="checkout__summary">
+        <h3 class="checkout__summary-title">Resumo do pedido</h3>
+
+        <div class="checkout__summary-items">
+          @for (item of cart.items(); track item.product.id + (item.size ?? '')) {
+            <div class="checkout__summary-item">
+              <div class="checkout__summary-img">
+                @if (item.product.images[0]?.src) {
+                  <img [src]="item.product.images[0].src" [alt]="item.product.name" />
+                }
+                <span class="checkout__summary-qty">{{ item.quantity }}</span>
+              </div>
+              <div class="checkout__summary-info">
+                <span class="checkout__summary-name">{{ item.product.name }}</span>
+                @if (item.size) {
+                  <span class="checkout__summary-size">{{ item.size }}</span>
+                }
+              </div>
+              <span class="checkout__summary-price">R$ {{ item.product.price }}</span>
+            </div>
+          }
+        </div>
+
+        <div class="checkout__summary-totals">
+          <div class="checkout__summary-row">
+            <span>Subtotal</span>
+            <span>R$ {{ cart.total().toFixed(2).replace('.', ',') }}</span>
+          </div>
+
+          @if (selectedShipping()) {
+            <div class="checkout__summary-row">
+              <span>Frete ({{ selectedShipping()!.name }})</span>
+              <span>R$ {{ formatPrice(selectedShipping()!.price_cents) }}</span>
+            </div>
+          }
+
+          <div class="checkout__summary-row checkout__summary-row--total">
+            <span>Total</span>
+            <span>R$ {{ grandTotal().toFixed(2).replace('.', ',') }}</span>
+          </div>
+        </div>
+
+        @if (submitError()) {
+          <p class="checkout__error">{{ submitError() }}</p>
+        }
+
+        <button
+          class="btn btn--primary checkout__submit"
+          [disabled]="!isFormValid() || submitting()"
+          (click)="submit()"
+        >
+          @if (submitting()) {
+            Processando...
+          } @else {
+            Finalizar pedido
+          }
+        </button>
+
+        <p class="checkout__payment-note">
+          Pagamento por Mercado Pago — você será redirecionado após confirmação.
+        </p>
+      </div>
+
+    </div>
+  </div>
+}

@@ -110,8 +110,8 @@
 
   &__pricing {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.15rem;
   }
 
   &__price {
@@ -124,6 +124,11 @@
       color: var(--um-gray-400);
       text-decoration: line-through;
     }
+  }
+
+  &__installment {
+    font-size: 0.75rem;
+    color: var(--um-gray-400);
   }
 
   &__sizes {

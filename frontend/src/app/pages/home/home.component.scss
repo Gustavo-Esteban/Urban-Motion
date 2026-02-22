@@ -73,29 +73,35 @@
   display: flex;
   flex-direction: column;
   gap: 0.875rem;
+  cursor: pointer;
 
   &__img {
     width: 100%;
     aspect-ratio: 3 / 4;
     background-color: var(--um-gray-100);
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    &:hover img {
+      transform: scale(1.03);
+    }
 
     &--placeholder {
       background-color: #1a1a1a;
-    }
-
-    &--white {
-      background-color: var(--um-gray-200);
-    }
-
-    &--gray {
-      background-color: #888;
     }
   }
 
   &__info {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    flex-direction: column;
+    gap: 0.2rem;
   }
 
   &__name {
@@ -103,10 +109,21 @@
     font-weight: 500;
   }
 
+  &__pricing {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
   &__price {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     font-weight: 600;
-    color: var(--um-gray-700);
+    color: var(--um-black);
+  }
+
+  &__installment {
+    font-size: 0.75rem;
+    color: var(--um-gray-400);
   }
 
   &__link {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ProductsService, WooProduct } from '../../services/products.service';
 
@@ -10,21 +10,21 @@ import { ProductsService, WooProduct } from '../../services/products.service';
   styleUrl: './store.component.scss',
 })
 export class StoreComponent implements OnInit {
-  products: WooProduct[] = [];
-  loading = true;
-  error = false;
+  products = signal<WooProduct[]>([]);
+  loading = signal(true);
+  error = signal(false);
 
   constructor(private productsService: ProductsService) {}
 
   ngOnInit() {
     this.productsService.getAll({ per_page: 20 }).subscribe({
       next: (data) => {
-        this.products = Array.isArray(data) ? data : [];
-        this.loading = false;
+        this.products.set(Array.isArray(data) ? data : []);
+        this.loading.set(false);
       },
       error: () => {
-        this.error = true;
-        this.loading = false;
+        this.error.set(true);
+        this.loading.set(false);
       },
     });
   }
@@ -38,5 +38,10 @@ export class StoreComponent implements OnInit {
 
   getImage(product: WooProduct): string {
     return product.images?.[0]?.src ?? '';
+  }
+
+  installment(price: string): string {
+    const value = parseFloat(price) / 3;
+    return value.toFixed(2).replace('.', ',');
   }
 }

@@ -5,8 +5,83 @@
 </div>
 
 <section class="cart container">
-  <div class="cart__empty">
-    <p>Seu carrinho está vazio.</p>
-    <a routerLink="/loja" class="btn btn--primary">Ver produtos</a>
-  </div>
+
+  @if (!cart.items().length) {
+    <div class="cart__empty">
+      <p>Seu carrinho está vazio.</p>
+      <a routerLink="/loja" class="btn btn--primary">Ver produtos</a>
+    </div>
+  } @else {
+    <div class="cart__layout">
+
+      <div class="cart__items">
+        @for (item of cart.items(); track item.product.id + (item.size ?? '')) {
+          <div class="cart-item">
+            <div class="cart-item__img">
+              @if (item.product.images[0]?.src) {
+                <img [src]="item.product.images[0].src" [alt]="item.product.name" />
+              } @else {
+                <div class="cart-item__img-placeholder"></div>
+              }
+            </div>
+
+            <div class="cart-item__info">
+              <h3 class="cart-item__name">{{ item.product.name }}</h3>
+              @if (item.size) {
+                <p class="cart-item__size">Tamanho: {{ item.size }}</p>
+              }
+              <p class="cart-item__price">R$ {{ item.product.price }}</p>
+            </div>
+
+            <div class="cart-item__qty">
+              <button
+                class="cart-item__qty-btn"
+                (click)="cart.updateQuantity(item.product.id, item.size, item.quantity - 1)"
+              >−</button>
+              <span class="cart-item__qty-value">{{ item.quantity }}</span>
+              <button
+                class="cart-item__qty-btn"
+                (click)="cart.updateQuantity(item.product.id, item.size, item.quantity + 1)"
+              >+</button>
+            </div>
+
+            <button
+              class="cart-item__remove"
+              (click)="cart.remove(item.product.id, item.size)"
+              title="Remover"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+        }
+      </div>
+
+      <div class="cart__summary">
+        <h3 class="cart__summary-title">Resumo do pedido</h3>
+
+        <div class="cart__summary-row">
+          <span>Subtotal ({{ cart.count() }} {{ cart.count() === 1 ? 'item' : 'itens' }})</span>
+          <span>R$ {{ formatPrice(cart.total()) }}</span>
+        </div>
+
+        <div class="cart__summary-row cart__summary-row--total">
+          <span>Total</span>
+          <span>R$ {{ formatPrice(cart.total()) }}</span>
+        </div>
+
+        <a routerLink="/checkout" class="btn btn--primary cart__checkout-btn">
+          Finalizar pedido
+        </a>
+
+        <a routerLink="/loja" class="cart__continue">
+          Continuar comprando
+        </a>
+      </div>
+
+    </div>
+  }
+
 </section>

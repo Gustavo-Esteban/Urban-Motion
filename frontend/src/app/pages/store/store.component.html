@@ -1,19 +1,19 @@
 <div class="store-header">
   <div class="container">
     <h1>Loja</h1>
-    <p>{{ products.length }} produtos</p>
+    <p>{{ products().length }} produtos</p>
   </div>
 </div>
 
 <section class="store container">
 
-  @if (loading) {
+  @if (loading()) {
     <div class="store__loading">Carregando produtos...</div>
-  } @else if (error) {
+  } @else if (error()) {
     <div class="store__error">Não foi possível carregar os produtos. Tente novamente.</div>
   } @else {
     <div class="store__grid">
-      @for (p of products; track p.id) {
+      @for (p of products(); track p.id) {
         <div class="product-card" [routerLink]="['/loja', p.id]">
           <div class="product-card__img-wrap">
             @if (getImage(p)) {
@@ -40,6 +40,7 @@
                 <span class="product-card__price-old">R$ {{ p.regular_price }}</span>
               }
               <span class="product-card__price">R$ {{ p.price }}</span>
+              <span class="product-card__installment">3x de R$ {{ installment(p.price) }}</span>
             </div>
 
             @if (getSizes(p).length) {

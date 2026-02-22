@@ -84,6 +84,17 @@ button {
       color: var(--um-black);
     }
   }
+
+  &--secondary {
+    background-color: transparent;
+    color: var(--um-black);
+    border: 1px solid var(--um-black);
+
+    &:hover {
+      background-color: var(--um-black);
+      color: var(--um-white);
+    }
+  }
 }
 
 .container {
