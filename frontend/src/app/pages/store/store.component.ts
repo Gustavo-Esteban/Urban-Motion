@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { finalize, tap } from 'rxjs/operators';
 import { ProductsService, WooProduct } from '../../services/products.service';
@@ -15,7 +15,10 @@ export class StoreComponent implements OnInit {
   loading = true;
   error = false;
 
-  constructor(private productsService: ProductsService) {}
+  constructor(
+    private productsService: ProductsService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit() {
     console.log('StoreComponent: ngOnInit');
@@ -28,7 +31,7 @@ export class StoreComponent implements OnInit {
       .pipe(
         tap({
           next: (data) => {
-            console.log('StoreComponent: produtos recebidos', data);
+          console.log('StoreComponent: produtos recebidos', data);
           },
           error: (err) => {
             console.error('StoreComponent: erro na requisição', err);
@@ -37,15 +40,18 @@ export class StoreComponent implements OnInit {
         finalize(() => {
           console.log('StoreComponent: finalize chamado');
           this.loading = false;
+          this.cdr.detectChanges();
         }),
       )
       .subscribe({
         next: (data) => {
           this.products = Array.isArray(data) ? data : [];
+          this.cdr.detectChanges();
         },
         error: (err) => {
           console.error('Erro ao carregar produtos', err);
           this.error = true;
+          this.cdr.detectChanges();
         },
       });
 
@@ -53,6 +59,7 @@ export class StoreComponent implements OnInit {
       if (this.loading) {
         console.warn('StoreComponent: timeout ainda em loading, forçando false');
         this.loading = false;
+        this.cdr.detectChanges();
       }
     }, 5000);
   }
