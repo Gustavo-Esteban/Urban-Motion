@@ -2,6 +2,9 @@ Options -MultiViews
 
 DirectoryIndex index.html index.php
 
+# Impede redirect automatico de /loja para /loja/ quando existe pasta /loja/
+DirectorySlash Off
+
 RewriteEngine On
 
 # 1. Arquivos fisicos reais (js, css, imagens, fontes, etc.)
