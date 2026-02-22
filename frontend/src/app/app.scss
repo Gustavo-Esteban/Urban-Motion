@@ -135,10 +135,32 @@
     border-top: 1px solid #222;
     padding: 1.25rem 1.5rem;
 
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+
+      @media (max-width: 480px) {
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+    }
+
     p {
       font-size: 0.75rem;
       color: var(--um-gray-400);
-      text-align: center;
+    }
+
+    a {
+      color: var(--um-gray-400);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color var(--um-transition);
+
+      &:hover {
+        color: var(--um-white);
+      }
     }
   }
 }
