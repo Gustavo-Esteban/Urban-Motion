@@ -1,4 +1,18 @@
 Options -MultiViews
+
+# Angular tem prioridade: index.html antes de index.php
+DirectoryIndex index.html index.php
+
 RewriteEngine On
+
+# Deixa wp-admin e wp-login acessíveis normalmente
+RewriteCond %{REQUEST_URI} ^/wp-admin [NC,OR]
+RewriteCond %{REQUEST_URI} ^/wp-login [NC,OR]
+RewriteCond %{REQUEST_URI} ^/wp-content [NC,OR]
+RewriteCond %{REQUEST_URI} ^/wp-includes [NC]
+RewriteRule ^ - [L]
+
+# Redireciona tudo mais para index.html (SPA Angular)
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.html [QSA,L]
