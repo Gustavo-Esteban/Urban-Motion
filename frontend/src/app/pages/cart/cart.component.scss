@@ -110,6 +110,31 @@
 
   @media (max-width: 480px) {
     grid-template-columns: 64px 1fr auto;
+    grid-template-rows: auto auto;
+
+    .cart-item__img {
+      grid-row: 1 / 3;
+      width: 64px;
+      height: 80px;
+    }
+
+    .cart-item__info {
+      grid-column: 2 / 4;
+      grid-row: 1;
+    }
+
+    .cart-item__qty {
+      grid-column: 2;
+      grid-row: 2;
+      align-self: center;
+    }
+
+    .cart-item__remove {
+      grid-column: 3;
+      grid-row: 2;
+      align-self: center;
+      justify-self: end;
+    }
   }
 
   &__img {

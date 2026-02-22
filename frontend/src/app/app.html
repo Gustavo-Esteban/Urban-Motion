@@ -2,22 +2,44 @@
   <div class="navbar__inner container">
     <a class="navbar__brand" routerLink="/">Urban Motion</a>
 
-    <nav class="navbar__links">
+    <nav class="navbar__links" [class.open]="menuOpen()">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
       <a routerLink="/loja" routerLinkActive="active">Loja</a>
       <a routerLink="/sobre" routerLinkActive="active">Sobre</a>
     </nav>
 
-    <a class="navbar__cart" routerLink="/carrinho">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-        <line x1="3" y1="6" x2="21" y2="6"/>
-        <path d="M16 10a4 4 0 01-8 0"/>
-      </svg>
-      @if (cart.count() > 0) {
-        <span class="navbar__cart-count">{{ cart.count() }}</span>
-      }
-    </a>
+    <div class="navbar__actions">
+      <a class="navbar__cart" routerLink="/carrinho">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        @if (cart.count() > 0) {
+          <span class="navbar__cart-count">{{ cart.count() }}</span>
+        }
+      </a>
+
+      <button
+        class="navbar__hamburger"
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="menuOpen()"
+        aria-label="Menu"
+      >
+        @if (menuOpen()) {
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        } @else {
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        }
+      </button>
+    </div>
   </div>
 </header>
 
